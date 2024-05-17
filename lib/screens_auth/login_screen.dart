@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maristcommerce/screens/auth/home_screen.dart';
+import 'package:maristcommerce/screen_pages/home_screen.dart';
 import 'sign_in.dart';
 import 'sign_up.dart';
 

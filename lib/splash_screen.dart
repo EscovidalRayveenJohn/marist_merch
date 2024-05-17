@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import 'screens_auth/login_screen.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -22,7 +24,10 @@ class _SplashScreenState extends State<SplashScreen>
     );
     _animationController.forward();
     Timer(const Duration(seconds: 3), () {
-      // You can add any code you want to execute after the timer expires here
+      // Navigate to LoginScreen after the timer expires
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
     });
   }
 
@@ -42,8 +47,8 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
               ),
               child: Image.asset(
-                'logo.jpg',
-                height: 150, // Adjust the height as needed
+                'images/logo.png',
+                height: 450, // Adjust the height as needed
               ),
             ),
             const SizedBox(
@@ -56,13 +61,6 @@ class _SplashScreenState extends State<SplashScreen>
                   curve: Curves.easeOut,
                 ),
               ),
-              child: const Text(
-                'MARIST COMMERCE',
-                style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
             ),
           ],
         ),
@@ -70,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen>
       bottomNavigationBar: const SizedBox(
         height: 40,
         child: Text(
-          'Powered By COUT',
+          'Powered By MaristCoders',
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.black, fontStyle: FontStyle.italic),
         ),

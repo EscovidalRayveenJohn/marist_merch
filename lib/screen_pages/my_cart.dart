@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maristcommerce/BottomNavBar/custom_scaffold.dart';
+import 'package:maristcommerce/product_shop/cart_detail.dart';
+import 'package:provider/provider.dart';
 
 class MyCart extends StatefulWidget {
   const MyCart({super.key});
@@ -66,6 +68,7 @@ class _MyCartState extends State<MyCart> {
 
   @override
   Widget build(BuildContext context) {
+    List<CartItem> cartItems = Provider.of<CartProvider>(context).cartItems;
     return CustomScaffold(
       body: SafeArea(
         child: Padding(
@@ -79,8 +82,9 @@ class _MyCartState extends State<MyCart> {
               ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: productNames.length,
+                  itemCount: cartItems.length,
                   itemBuilder: ((context, index) {
+                    CartItem item = cartItems[index];
                     return Dismissible(
                       key: Key(productNames[index]),
                       direction: DismissDirection.endToStart,
@@ -113,11 +117,13 @@ class _MyCartState extends State<MyCart> {
                             Column(
                               children: [
                                 Text(
-                                  productNames[index],
+                                  //productNames[index],
+                                  item.name,
                                   style: TextStyle(fontSize: 18.0),
                                 ),
                                 Text(
-                                  '\$${prices[index]}',
+                                  //'\₱${prices[index]}',
+                                  '\₱${item.price}',
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.grey),
                                 ),
@@ -162,7 +168,7 @@ class _MyCartState extends State<MyCart> {
                     ),
                     SizedBox(width: 50.0),
                     Text(
-                      '\$${getCartTotal().toStringAsFixed(2)}',
+                      '\₱${getCartTotal().toStringAsFixed(2)}',
                       style: TextStyle(
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,

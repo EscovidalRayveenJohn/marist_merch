@@ -41,23 +41,40 @@ class _MerchState extends State<Merch> {
     '\₱249',
   ];
 
+  bool _isDisposed = false;
+
   @override
   void initState() {
     super.initState();
     fetchImages();
   }
 
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
+  }
+
   Future<void> fetchImages() async {
     FirebaseStorage storage = FirebaseStorage.instance;
     for (int i = 1; i <= 5; i++) {
-      Reference ref = storage.ref().child('m$i.jpg');
-      String downloadUrl = await ref.getDownloadURL();
-      setState(() {
-        imageUrls.add(downloadUrl);
-      });
+      try {
+        Reference ref = storage.ref().child('m$i.jpg');
+        String downloadUrl = await ref.getDownloadURL();
+        if (!_isDisposed) {
+          setState(() {
+            imageUrls.add(downloadUrl);
+          });
+        }
+      } catch (e) {
+        if (!_isDisposed) {
+          print('Error fetching image $i: $e');
+        }
+      }
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return CustomScaffold(
       body: SafeArea(

@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:maristcommerce/screens/auth/sign_up.dart';
-import 'package:maristcommerce/screens/auth/forget_pass.dart';
-import 'home_screen.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:maristcommerce/screens_auth/sign_up.dart';
+import 'package:maristcommerce/screens_auth/forget_pass.dart';
+import '../screen_pages/home_screen.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -15,6 +16,22 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   TextEditingController _emailAddressController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+
+  handleGoogleSignIn() async {
+    GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
+
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    if (userCredential.user != null) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +129,29 @@ class _SignInState extends State<SignIn> {
                         SizedBox(width: 5),
                         Icon(Icons.arrow_forward, size: 24.0)
                       ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 30),
+              Center(
+                child: SizedBox(
+                  height: 50,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      handleGoogleSignIn();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      side: BorderSide(color: Colors.grey),
+                    ),
+                    icon: Image.asset('images/google_logo.png'),
+                    label: Text(
+                      'Sign in with Google',
+                      style: TextStyle(color: Colors.black, fontSize: 16.0),
                     ),
                   ),
                 ),

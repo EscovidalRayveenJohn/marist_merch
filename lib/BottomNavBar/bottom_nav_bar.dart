@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:maristcommerce/BottomNavBar/merch.dart';
-import 'package:maristcommerce/BottomNavBar/my_account.dart';
-import 'package:maristcommerce/BottomNavBar/my_cart.dart';
-import 'package:maristcommerce/screens/auth/home_screen.dart';
+import 'package:maristcommerce/screen_pages/merch.dart';
+import 'package:maristcommerce/screen_pages/my_account.dart';
+import 'package:maristcommerce/screen_pages/my_cart.dart';
+import 'package:maristcommerce/screen_pages/home_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
   final initialIndex;
@@ -83,7 +83,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               Icons.shopping_bag_outlined,
               color: _selectedIndex == 1 ? Colors.white : Color(0xFF7ED957),
             ),
-            label: 'Shop',
+            label: 'Merch',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart_outlined,

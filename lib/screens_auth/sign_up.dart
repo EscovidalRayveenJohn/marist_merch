@@ -1,16 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:maristcommerce/screens/auth/sign_in.dart';
+import '../screen_pages/home_screen.dart';
+import 'sign_in.dart';
 
-class ForgetPassword extends StatefulWidget {
-  const ForgetPassword({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<ForgetPassword> createState() => _ForgetPasswordState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _ForgetPasswordState extends State<ForgetPassword> {
+class _SignUpState extends State<SignUp> {
+  TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +44,34 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Forget Password',
+                    'Create Account',
                     style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 40),
                   TextFields(
+                    label: 'FULL NAME',
+                    icon: const Icon(Icons.person_2_outlined),
+                    controller: _nameController,
+                  ),
+                  const SizedBox(height: 10),
+                  TextFields(
                     label: 'EMAIL',
                     icon: const Icon(Icons.email_outlined),
                     controller: _emailController,
+                  ),
+                  const SizedBox(height: 10),
+                  TextFields(
+                    label: 'PASSOWORD',
+                    secureText: true,
+                    icon: const Icon(Icons.lock_outlined),
+                    controller: _passwordController,
+                  ),
+                  const SizedBox(height: 10),
+                  TextFields(
+                    label: 'CONFIRM PASSWORD',
+                    secureText: true,
+                    icon: const Icon(Icons.lock_outlined),
+                    controller: _confirmPasswordController,
                   ),
                   const SizedBox(height: 10),
                   Align(
@@ -57,11 +81,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       child: ElevatedButton(
                           onPressed: () {
                             FirebaseAuth.instance
-                                .sendPasswordResetEmail(
-                                  email: _emailController.text,
-                                )
+                                .createUserWithEmailAndPassword(
+                                    email: _emailController.text,
+                                    password: _passwordController.text)
                                 .then((value) => {
-                                      Navigator.of(context).pop(),
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) => HomeScreen()),
+                                      ),
                                     });
                           },
                           style: ElevatedButton.styleFrom(
@@ -72,7 +99,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(' RESET'),
+                              Text(' SIGN UP'),
                               SizedBox(width: 5),
                               Icon(Icons.arrow_forward, size: 24.0)
                             ],
@@ -90,7 +117,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Do You Know Password?",
+                "ALready have an account?",
                 style: TextStyle(
                     fontFamily: 'SFUIDisplay',
                     color: Colors.black,

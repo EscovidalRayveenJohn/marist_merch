@@ -1,20 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
-import 'sign_in.dart';
+import 'package:maristcommerce/screens_auth/sign_in.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class ForgetPassword extends StatefulWidget {
+  const ForgetPassword({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<ForgetPassword> createState() => _ForgetPasswordState();
 }
 
-class _SignUpState extends State<SignUp> {
-  TextEditingController _nameController = TextEditingController();
+class _ForgetPasswordState extends State<ForgetPassword> {
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,34 +40,14 @@ class _SignUpState extends State<SignUp> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Create Account',
+                    'Forget Password',
                     style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 40),
                   TextFields(
-                    label: 'FULL NAME',
-                    icon: const Icon(Icons.person_2_outlined),
-                    controller: _nameController,
-                  ),
-                  const SizedBox(height: 10),
-                  TextFields(
                     label: 'EMAIL',
                     icon: const Icon(Icons.email_outlined),
                     controller: _emailController,
-                  ),
-                  const SizedBox(height: 10),
-                  TextFields(
-                    label: 'PASSOWORD',
-                    secureText: true,
-                    icon: const Icon(Icons.lock_outlined),
-                    controller: _passwordController,
-                  ),
-                  const SizedBox(height: 10),
-                  TextFields(
-                    label: 'CONFIRM PASSWORD',
-                    secureText: true,
-                    icon: const Icon(Icons.lock_outlined),
-                    controller: _confirmPasswordController,
                   ),
                   const SizedBox(height: 10),
                   Align(
@@ -81,14 +57,11 @@ class _SignUpState extends State<SignUp> {
                       child: ElevatedButton(
                           onPressed: () {
                             FirebaseAuth.instance
-                                .createUserWithEmailAndPassword(
-                                    email: _emailController.text,
-                                    password: _passwordController.text)
+                                .sendPasswordResetEmail(
+                                  email: _emailController.text,
+                                )
                                 .then((value) => {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) => HomeScreen()),
-                                      ),
+                                      Navigator.of(context).pop(),
                                     });
                           },
                           style: ElevatedButton.styleFrom(
@@ -99,7 +72,7 @@ class _SignUpState extends State<SignUp> {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(' SIGN UP'),
+                              Text(' RESET'),
                               SizedBox(width: 5),
                               Icon(Icons.arrow_forward, size: 24.0)
                             ],
@@ -117,7 +90,7 @@ class _SignUpState extends State<SignUp> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "ALready have an account?",
+                "Do You Know Password?",
                 style: TextStyle(
                     fontFamily: 'SFUIDisplay',
                     color: Colors.black,
