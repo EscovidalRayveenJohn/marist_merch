@@ -11,11 +11,7 @@ class ProductDetail extends StatefulWidget {
 class _ProductDetailState extends State<ProductDetail> {
   int _currentSlide = 0;
 
-  final List<String> _image = [
-    'images/3.jpg'
-        'images/4.jpg'
-        'images/5.jpg'
-  ];
+  final List<String> _image = ['images/3.jpg', 'images/4.jpg', 'images/5.jpg'];
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +20,7 @@ class _ProductDetailState extends State<ProductDetail> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         leading: IconButton(
-          onPressed: () => Navigator.of(context).pop,
+          onPressed: () => Navigator.pop(context),
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
             color: Colors.black,
