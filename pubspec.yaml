@@ -1,0 +1,30 @@
+name: maristcommerce
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.3.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.6
+  flutter_lints: ^4.0.0
+  firebase_core: any
+  firebase_auth: any
+  carousel_slider: any
+  css_colors: 
+  firebase_storage: ^11.7.5
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  
+
+flutter:
+  uses-material-design: true
+  assets:
+    - images/
