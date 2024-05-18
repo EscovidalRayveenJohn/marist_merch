@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:maristcommerce/BottomNavBar/custom_scaffold.dart';
+import 'package:maristcommerce/BottomNavBar/list_option.dart';
 import 'package:maristcommerce/screens_auth/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:maristcommerce/screen_pages/home_screen.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({Key? key}) : super(key: key);
@@ -94,18 +96,26 @@ class _MyAccountState extends State<MyAccount> {
             ListOfOption(
               icon: Icon(Icons.person_2_outlined, color: Colors.green),
               title: 'Home',
+              onTap: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
+              },
             ),
             ListOfOption(
               icon: Icon(Icons.location_city_outlined, color: Colors.green),
               title: 'Address',
+              onTap: () {},
             ),
             ListOfOption(
               icon: Icon(Icons.payment_outlined, color: Colors.green),
               title: 'Payment',
+              onTap: () {},
             ),
             ListOfOption(
               icon: Icon(Icons.shopping_bag_outlined, color: Colors.green),
               title: 'Orders',
+              onTap: () {},
             ),
             SizedBox(height: 10),
             Padding(
@@ -118,6 +128,7 @@ class _MyAccountState extends State<MyAccount> {
             ListOfOption(
               icon: Icon(Icons.language_outlined, color: Colors.green),
               title: 'Language',
+              onTap: () {},
             ),
             ListTile(
               leading: Icon(Icons.exit_to_app, color: Colors.red),
@@ -137,23 +148,6 @@ class _MyAccountState extends State<MyAccount> {
       ),
       showBottomNavBar: true,
       initalIndex: 3,
-    );
-  }
-}
-
-class ListOfOption extends StatelessWidget {
-  final Icon icon;
-  final String title;
-  const ListOfOption({Key? key, required this.icon, required this.title})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: icon,
-      title: Text(title),
-      trailing: Icon(Icons.arrow_forward_ios_outlined, size: 16),
-      onTap: () {},
     );
   }
 }
