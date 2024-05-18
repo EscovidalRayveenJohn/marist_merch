@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:maristcommerce/screen_pages/home_screen.dart';
 import 'sign_in.dart';
 import 'sign_up.dart';
@@ -44,6 +45,25 @@ class LoginScreen extends StatelessWidget {
             text: 'SIGN IN',
           ),
           Spacer(),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30, right: 20),
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+                },
+                child: const Text(
+                  'Skip',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w400),
+                ),
+              ),
+            ),
+          )
         ]),
       ),
     ));
