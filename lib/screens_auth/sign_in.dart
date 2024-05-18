@@ -38,6 +38,29 @@ class _SignInState extends State<SignIn> {
     }
   }
 
+  Future<void> handleEmailSignIn() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: _emailAddressController.text,
+              password: _passwordController.text);
+
+      User? user = userCredential.user;
+      if (user != null) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('displayName', user.displayName ?? 'User Name');
+        await prefs.setString('email', user.email ?? 'user@example.com');
+        await prefs.setString('photoUrl', user.photoURL ?? '');
+
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+      }
+    } on FirebaseAuthException catch (e) {
+      print('Error: $e');
+      // Handle sign-in errors here
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -114,14 +137,7 @@ class _SignInState extends State<SignIn> {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
-                      FirebaseAuth.instance
-                          .signInWithEmailAndPassword(
-                              email: _emailAddressController.text,
-                              password: _passwordController.text)
-                          .then((value) => {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => HomeScreen()))
-                              });
+                      handleEmailSignIn();
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,

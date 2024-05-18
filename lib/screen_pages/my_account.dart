@@ -46,7 +46,7 @@ class _MyAccountState extends State<MyAccount> {
                 padding: EdgeInsets.only(left: 20),
                 child: Row(
                   children: [
-                    _photoUrl != null
+                    _photoUrl != null && _photoUrl!.isNotEmpty
                         ? CircleAvatar(
                             backgroundImage: NetworkImage(_photoUrl!),
                             radius: 30,
@@ -78,7 +78,7 @@ class _MyAccountState extends State<MyAccount> {
               ),
             ),
             Image.asset(
-              'images/background.jpg',
+              'images/m3.jpg',
               height: 150,
               width: MediaQuery.of(context).size.width,
               fit: BoxFit.cover,
