@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:maristcommerce/screens_auth/sign_up.dart';
 import 'package:maristcommerce/screens_auth/forget_pass.dart';
-import '../screen_pages/home_screen.dart';
+import 'package:maristcommerce/screen_pages/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+  const SignIn({Key? key}) : super(key: key);
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -17,7 +17,7 @@ class _SignInState extends State<SignIn> {
   TextEditingController _emailAddressController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  handleGoogleSignIn() async {
+  Future<void> handleGoogleSignIn() async {
     GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
@@ -28,6 +28,11 @@ class _SignInState extends State<SignIn> {
         await FirebaseAuth.instance.signInWithCredential(credential);
 
     if (userCredential.user != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('displayName', googleUser?.displayName ?? '');
+      await prefs.setString('email', googleUser?.email ?? '');
+      await prefs.setString('photoUrl', googleUser?.photoUrl ?? '');
+
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => HomeScreen()));
     }
@@ -165,7 +170,7 @@ class _SignInState extends State<SignIn> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Dont have an account?',
+                'Don\'t have an account?',
                 style: TextStyle(
                     fontFamily: 'SFUIDisplay',
                     color: Colors.black,
